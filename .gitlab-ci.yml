@@ -1,0 +1,25 @@
+# This file is no longer in use. Was used when this was hosted on GitLab
+image: node:13.14.0-alpine3.10
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - ~/.npm
+#    - .jest
+stages:
+#  - test
+  - deploy
+before_script:
+  - apk --no-cache add git
+  - npm ci
+  # Increase file watchers: https://github.com/expo/expo-github-action/issues/20
+  - echo fs.inotify.max_user_watches=524288 | tee -a /etc/sysctl.conf && sysctl -p
+#jest-tests:
+#  stage: test
+#  script:
+#    - npx jest --ci
+expo-deployments:
+  stage: deploy
+  script:
+    - apk add --no-cache bash
+    - npx expo login -u $EXPO_USERNAME -p $EXPO_PASSWORD
+    - npx expo publish --non-interactive
