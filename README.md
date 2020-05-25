@@ -1,3 +1,3 @@
-# Applikasjon
+# Application
 
-Demo applikasjon
+Bachelor project. Repository history wiped because it was hosted elsewhere originally.
